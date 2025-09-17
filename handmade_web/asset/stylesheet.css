@@ -1,0 +1,14 @@
+p{
+    font-size: 70px;
+    line-height: 70px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+a{
+    font-size: 70px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color:rgb(142, 127, 255)
+}
+a:hover {
+    font-size: 70px;
+color: blueviolet;
+}

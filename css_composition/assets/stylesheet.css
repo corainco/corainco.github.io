@@ -1,0 +1,55 @@
+body{
+      display: flex;
+      flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #fafafa;
+  margin: 0;
+}
+.top-link{
+    position:absolute;
+    top:20px;
+    font-size: 18px;
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    font-weight: bold;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+}
+.circle1{
+     width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background:blue;
+    transform: translateY(-30px);
+}
+.circle{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background:black;
+}
+.circle2{
+     width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background:blue;
+    transform: translateY(30px);
+}
+.circle3{
+     width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background:rgb(255, 255, 255);
+}
+.circle4{
+     width: 50px;
+    height: 35px;
+    border-radius: 50%;
+    background:blue;
+}
