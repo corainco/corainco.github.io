@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #f1f1f1;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 200px);
+            grid-template-rows: repeat(3, 200px);
+            gap: 10px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .square {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #ddd;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mark {
+            position: absolute;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 18px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        #info {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tile</h1>
+    <div id="grid-container"></div>
+    <button onclick="generateNew()">Generate New Composition</button>
+    
+    <div id="info">
+        <p><strong></strong></p>
+    </div>
+
+    <script>
+        // Color palette
+        const colors = [
+            '#e74c3c', // Red
+            '#3498db', // Blue
+            '#f1c40f', // Yellow
+            '#2ecc71', // Green
+            '#e67e22', // Orange
+            '#9b59b6'  // Purple
+        ];
+
+        // Dice roll
+        function rollDice() {
+            return Math.floor(Math.random() * 6) + 1;
+        }
+
+        // Coin flip
+        function flipCoin() {
+            return Math.random() < 0.5 ? 'heads' : 'tails';
+        }
+
+        // Generate a single square
+        function generateSquare(square) {
+            square.innerHTML = '';
+            
+            // color
+            const colorRoll = rollDice();
+            const color = colors[colorRoll - 1];
+            
+            // mark type
+            const markType = flipCoin();
+            const isLines = markType === 'heads';
+            
+            // quantity
+            const quantityRoll = rollDice();
+            let quantity;
+            if (quantityRoll <= 2) quantity = 5;
+            else if (quantityRoll <= 4) quantity = 10;
+            else quantity = 15;
+            
+            // direction (if lines)
+            const directionRoll = rollDice();
+            let direction;
+            if (directionRoll <= 2) direction = 'horizontal';
+            else if (directionRoll <= 4) direction = 'vertical';
+            else direction = 'diagonal';
+            
+            // Draw marks
+            if (isLines) {
+                drawLines(square, color, direction, quantity);
+            } else {
+                drawCircles(square, color, quantity);
+            }
+        }
+
+        // Draw lines
+        function drawLines(square, color, direction, quantity) {
+            const spacing = 200 / quantity;
+            
+            for (let i = 0; i < quantity; i++) {
+                const line = document.createElement('div');
+                line.className = 'mark';
+                line.style.background = color;
+                
+                if (direction === 'horizontal') {
+                    line.style.width = '200px';
+                    line.style.height = '2px';
+                    line.style.top = `${i * spacing}px`;
+                    line.style.left = '0';
+                } else if (direction === 'vertical') {
+                    line.style.width = '2px';
+                    line.style.height = '200px';
+                    line.style.left = `${i * spacing}px`;
+                    line.style.top = '0';
+                } else {
+                    line.style.width = '280px';
+                    line.style.height = '2px';
+                    line.style.left = '-40px';
+                    line.style.top = `${i * spacing}px`;
+                    line.style.transform = 'rotate(45deg)';
+                    line.style.transformOrigin = 'left center';
+                }
+                
+                square.appendChild(line);
+            }
+        }
+
+        // Draw circles
+        function drawCircles(square, color, quantity) {
+            for (let i = 0; i < quantity; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'mark';
+                
+                const size = Math.random() * 30 + 10;
+                const x = Math.random() * (200 - size);
+                const y = Math.random() * (200 - size);
+                
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.borderRadius = '50%';
+                circle.style.background = color;
+                circle.style.left = `${x}px`;
+                circle.style.top = `${y}px`;
+                
+                square.appendChild(circle);
+            }
+        }
+
+        // Generate grid
+        function generateGrid() {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 9; i++) {
+                const square = document.createElement('div');
+                square.className = 'square';
+                container.appendChild(square);
+                generateSquare(square);
+            }
+        }
+
+        // Generate new
+        function generateNew() {
+            generateGrid();
+        }
+
+        // Initial generation
+        generateGrid();
+    </script>
+</body>
+</html>

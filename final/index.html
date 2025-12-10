@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The Cinematic Lens – Viewing Pattern Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Mohave for headlines, Space Grotesk for text -->
+  <link href="https://fonts.googleapis.com/css2?family=Mohave:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Mohave:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --accent: #ff5547;
+      --body-font: "Space Grotesk", sans-serif;
+      --display-font: "Mohave", sans-serif;
+      --transition-fast: 0.4s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--body-font);
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* ----------------- HEADER LOGO ----------------- */
+    .site-header {
+      position: fixed;
+      top: 24px;
+      left: 32px;
+      z-index: 10;
+    }
+
+    .logo-img {
+      height: 34px;
+      width: auto;
+      display: block;
+    }
+
+    /* ----------------- TRANSITION OVERLAY ----------------- */
+    .transition-overlay {
+      position: fixed;
+      top: 0;
+      right: -100vw;
+      width: 100vw;
+      height: 100vh;
+      background: var(--accent);
+      z-index: 9999;
+      transition: none;
+    }
+
+    .transition-overlay.slide-in {
+      animation: slideInFromRight 0.8s ease-in-out forwards;
+    }
+
+    @keyframes slideInFromRight {
+      0% {
+        right: -100vw;
+      }
+      100% {
+        right: 0;
+      }
+    }
+
+    /* ----------------- HORIZONTAL SLIDER ----------------- */
+    .horizontal-wrapper {
+      display: flex;
+      width: 200vw;
+      height: 100vh;
+      transition: transform 0.8s ease-in-out;
+    }
+
+    section {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* ----------------- HERO SECTION ----------------- */
+   .section-intro {
+  background: url("assets/bg-image.png") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+}
+
+    .intro-inner {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .hero-title-image-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 56px;
+    }
+
+    .hero-title-image {
+      width: min(70vw, 680px);
+      height: auto;
+    }
+
+    .hero-subtitle {
+      font-family: "Heiti TC", "PingFang TC", sans-serif;
+      font-size: 40px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 60px;
+    }
+
+    .ghost-button {
+      border: 1px solid #ffffff;
+      background: transparent;
+      color: #ffffff;
+      font-size: 11px;
+      padding: 12px 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .ghost-button:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .btn-arrow-box {
+      border-left: 1px solid #ffffff;
+      padding-left: 14px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+
+    /* ----------------- PAGE 2 SECTION ----------------- */
+    .section-about {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    }
+
+    .about-inner {
+      padding: 120px clamp(32px, 6vw, 96px);
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      max-width: 760px;
+    }
+
+    .about-heading {
+      font-family: "PT Serif", serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.15;
+    }
+
+    .about-copy {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      max-width: 500px;
+    }
+
+    .about-copy p + p {
+      margin-top: 16px;
+    }
+
+    .about-accent {
+      background: var(--accent);
+      width: 100%;
+      height: 100%;
+    }
+
+    .scroll-right-btn {
+      margin-top: 24px;
+    }
+
+    /* ----------------- RESPONSIVE ----------------- */
+    @media (max-width: 780px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .horizontal-wrapper {
+        flex-direction: column;
+        width: 100vw;
+        height: auto;
+      }
+
+      section {
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .about-accent {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TRANSITION OVERLAY -->
+  <div class="transition-overlay" id="transitionOverlay"></div>
+
+  <!-- HEADER LOGO -->
+  <header class="site-header">
+    <img src="assets/cinefile-logo.svg" alt="Cinefile" class="logo-img" />
+  </header>
+
+  <!-- SLIDER CONTAINER -->
+  <div class="horizontal-wrapper" id="slider">
+
+    <!-- PAGE 1: HERO -->
+    <section class="section-intro">
+      <div class="intro-inner">
+        <div class="hero-title-image-wrap">
+          <img src="assets/hero-title.png" alt="THE CINEMATIC LENS" class="hero-title-image" />
+        </div>
+        <div class="hero-subtitle">
+          The Viewing Pattern Quiz
+        </div>
+        <button class="ghost-button" data-go="1">
+          TAKE THIS TEST TO FIND OUT <span class="btn-arrow-box">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- PAGE 2: DESCRIPTION -->
+    <section class="section-about">
+      <div class="about-inner">
+        <h1 class="about-heading">
+          The Viewing<br />Pattern Quiz
+        </h1>
+        <div class="about-copy">
+          <p>
+            What shapes the films we watch? Our choices feel personal, but they're influenced by algorithms, marketing, critical consensus, and decades of industry gatekeeping. This assessment examines your film knowledge—which directors you know, which stories you're drawn to, which genres you take seriously, and how you engage with cinema as culture.
+          </p>
+          <p>
+            By the end, you'll see patterns in your viewing habits you may not have noticed—patterns that often reflect broader industry imbalances rather than personal choices. No judgment, just a mirror. And maybe some surprises about where your knowledge is concentrated and where it has gaps.
+          </p>
+        </div>
+        <div class="scroll-right-btn">
+          <button class="ghost-button" id="startQuizBtn">START <span class="btn-arrow-box">→</span></button>
+        </div>
+      </div>
+      <div class="about-accent"></div>
+    </section>
+
+  </div>
+
+  <!-- SLIDER SCRIPT -->
+  <script>
+    const slider = document.getElementById("slider");
+    const transitionOverlay = document.getElementById("transitionOverlay");
+    const startQuizBtn = document.getElementById("startQuizBtn");
+
+    // Scroll to page 2
+    document.querySelectorAll("[data-go='1']").forEach(btn => {
+      btn.addEventListener("click", () => {
+        slider.style.transform = "translateX(-100vw)";
+      });
+    });
+
+    // Start quiz with transition
+    startQuizBtn.addEventListener("click", () => {
+      // Slide in overlay
+      transitionOverlay.classList.add("slide-in");
+      
+      setTimeout(() => {
+        // Navigate to quiz page
+        window.location.href = "quiz.html";
+      }, 800);
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern 3 - Rainbow Gradient</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .square {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rainbow Gradient</h1>
+    <div class="container" id="squareContainer"></div>
+
+    <script>
+        // Get the container where we'll put our squares
+        const container = document.getElementById('squareContainer');
+
+        // Total number of squares to create
+        const totalSquares = 252;
+
+        // Loop to create squares
+        for (let i = 0; i < totalSquares; i++) {
+            // Create a new div element for each square
+            const square = document.createElement('div');
+            square.className = 'square';
+
+            // Start from green (120) and go to blue (240)
+            // Calculate hue value to transition from green to blue
+            const hue = 120 + (i * 120) / totalSquares;
+
+            // Use HSL color format (Hue, Saturation, Lightness)
+            // Check if in first half or second half to vary lightness
+            let lightness;
+            if (i < totalSquares / 2) {
+                // First half: gradually get lighter
+                lightness = 40 + (i * 20) / totalSquares;
+            } else {
+                // Second half: gradually get darker
+                lightness = 60 - ((i - totalSquares / 2) * 20) / totalSquares;
+            }
+
+            // Apply the color with calculated hue and lightness
+            square.style.backgroundColor = `hsl(${hue}, 80%, ${lightness}%)`;
+
+            // Add the square to the container
+            container.appendChild(square);
+        }
+    </script>
+</body>
+</html>

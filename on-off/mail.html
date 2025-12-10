@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You've Got Mail!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .envelope-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-container:hover {
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        .envelope-img {
+            width: 400px;
+            height: auto;
+            display: block;
+            rotate: -2deg;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 80px;
+            height: 80px;
+            background: #ff4444;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        .letter {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 750px;
+            max-width: 90%;
+            background: white;
+            padding: 200px 40px;
+            border: 3px solid #333;
+            text-align: center;
+            transition: bottom 0.8s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .letter.show {
+            bottom: 50px;
+        }
+
+        .letter h1 {
+            font-size: 50px;
+            margin-bottom: 30px;
+            color: #000000;
+        }
+
+        .letter p {
+            font-size: 50px;
+            line-height: 1.6;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope-container" id="envelope">
+        <img src="envelope.png" alt="Envelope" class="envelope-img">
+        <div class="notification-badge">1</div>
+    </div>
+
+    <div class="letter" id="letter">
+        <h1>CONGRATULATION!</h1>
+        <p>YOU'RE EVERYTHING WE EVER WANTED AND MORE!</p>
+        <p><strong>YOU GOT IN!</strong></p>
+    </div>
+
+    <script>
+        const envelope = document.getElementById('envelope');
+        const letter = document.getElementById('letter');
+        let clicked = false;
+
+        envelope.addEventListener('click', function() {
+            if (!clicked) {
+                clicked = true;
+                letter.classList.add('show');
+                envelope.style.opacity = '0.5';
+            }
+        });
+
+    </script>
+</body>
+</html>

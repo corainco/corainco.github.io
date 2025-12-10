@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern 2 - Shrinking and Growing Dots</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .dot {
+            border-radius: 50%;
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wave</h1>
+    <div class="container" id="dotContainer"></div>
+
+    <script>
+        // Get the container where we'll put our dots
+        const container = document.getElementById('dotContainer');
+
+        // Total number of rows
+        const totalRows = 10;
+        // Dots per row
+        const dotsPerRow = 20;
+        // Find the middle point of each row
+        const halfway = dotsPerRow / 2;
+
+        // Outer loop to create multiple rows
+        for (let row = 0; row < totalRows; row++) {
+            // Inner loop to create dots in each row
+            for (let i = 0; i < dotsPerRow; i++) {
+                // Create a new div element for each dot
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+
+                let size;
+
+                // Check if we're in the first half or second half
+                if (i < halfway) {
+                    // First half: dots get smaller (start at 80px, decrease by 8px each time)
+                    size = 80 - (i * 8);
+                } else {
+                    // Second half: dots get bigger again (start small, increase by 8px each time)
+                    size = (i - halfway) * 8;
+                }
+
+                // Apply the size to both width and height
+                dot.style.width = size + 'px';
+                dot.style.height = size + 'px';
+
+                // Add the dot to the container
+                container.appendChild(dot);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The Cinematic Lens – Your Results</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Mohave:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Mohave:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --accent: #ff5547;
+      --body-font: "Space Grotesk", sans-serif;
+      --display-font: "Mohave", sans-serif;
+      --serif-font: "PT Serif", serif;
+      --ticket-height: 650px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--body-font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 60px 40px;
+    }
+
+    /* Header Logo */
+    .site-header {
+      position: fixed;
+      top: 24px;
+      left: 32px;
+      z-index: 10;
+    }
+
+    .logo-img {
+      height: 34px;
+      width: auto;
+      display: block;
+    }
+
+    /* Results Container */
+    .results-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 40px;
+    }
+
+    /* Title as image */
+    .results-title-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 70px;
+    }
+
+    .results-title-image {
+      width: min(60vw, 520px);
+      height: auto;
+      display: block;
+    }
+
+    /* Cards Container */
+    .cards-wrapper {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 40px;
+      margin-bottom: 70px;
+      align-items: start;
+    }
+
+    /* Ticket Card Style - Rectangle with circular cutouts */
+    .result-card {
+      background: var(--accent);
+      position: relative;
+      border-radius: 0;
+      height: var(--ticket-height);
+    }
+
+    .result-card {
+      background: 
+        radial-gradient(circle at top left, transparent 25px, var(--accent) 25px),
+        radial-gradient(circle at top right, transparent 25px, var(--accent) 25px),
+        radial-gradient(circle at bottom left, transparent 25px, var(--accent) 25px),
+        radial-gradient(circle at bottom right, transparent 25px, var(--accent) 25px);
+      background-size: 51% 51%;
+      background-position: top left, top right, bottom left, bottom right;
+      background-repeat: no-repeat;
+    }
+
+    /* Dashed border inside */
+    .card-inner {
+      border: 2px dashed #000;
+      margin: 20px;
+      height: calc(var(--ticket-height) - 40px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Card Headers */
+    .card-header {
+      background: #000;
+      color: var(--accent);
+      padding: 18px 28px;
+      font-family: var(--display-font);
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 500;
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    .card-content {
+      padding: 40px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    /* Type Card Specific */
+    .type-card .card-content {
+      padding: 40px 40px 0 40px;
+      justify-content: center;
+    }
+
+    .type-name {
+      font-family: var(--serif-font);
+      font-size: 4.5rem;
+      line-height: 1.05;
+      color: #000;
+    }
+
+    .type-summary {
+      background: #000;
+      color: var(--accent);
+      padding: 32px 40px;
+      font-family: var(--serif-font);
+      font-size: 1.3rem;
+      line-height: 1.6;
+      font-weight: 400;
+      margin: 0;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    /* Dimension Sliders */
+    .dimensions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 45px;
+    }
+
+    .dimension-item {
+      position: relative;
+    }
+
+    .slider-label {
+      font-family: var(--serif-font);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .slider-container {
+      position: relative;
+      height: 12px;
+      background: #000;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .slider-marker {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border: 4px solid #000;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .dimension-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--display-font);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #000;
+    }
+
+    /* Description Text */
+    .description-text {
+      max-width: 1000px;
+      margin: 0 auto 70px auto;
+      text-align: left;
+      font-family: "DM Sans", var(--body-font), sans-serif;
+      font-size: 1.35rem;
+      line-height: 1.8;
+    }
+
+    /* Start Over Button */
+    .button-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .restart-button {
+      border: 1px solid #ffffff;
+      background: transparent;
+      color: #ffffff;
+      font-family: var(--display-font);
+      font-size: 0.95rem;
+      padding: 16px 36px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+    }
+
+    .restart-button:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .btn-arrow-box {
+      border-left: 1px solid #ffffff;
+      padding-left: 16px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .cards-wrapper {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .type-name {
+        font-size: 3.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --ticket-height: auto;
+      }
+
+      body {
+        padding: 40px 20px;
+      }
+
+      .result-card {
+        height: auto;
+        min-height: 500px;
+      }
+
+      .card-inner {
+        height: auto;
+        min-height: 460px;
+      }
+
+      .type-name {
+        font-size: 2.8rem;
+      }
+
+      .description-text {
+        font-size: 1.15rem;
+      }
+
+      .card-header {
+        font-size: 0.95rem;
+      }
+
+      .type-summary {
+        font-size: 1.1rem;
+        padding: 24px 30px;
+      }
+
+      .dimension-labels {
+        font-size: 0.9rem;
+      }
+
+      .slider-label {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Logo -->
+  <header class="site-header">
+    <img src="assets/cinefile-logo.svg" alt="Cinefile" class="logo-img" />
+  </header>
+
+  <!-- Results Container -->
+  <div class="results-container">
+    
+    <!-- Title as PNG -->
+    <div class="results-title-wrap">
+      <img src="assets/results-title.png" alt="Your Result" class="results-title-image" />
+    </div>
+
+    <!-- Cards -->
+    <div class="cards-wrapper">
+      
+      <!-- Breakdown Card (Wider) -->
+      <div class="result-card breakdown-card">
+        <div class="card-inner">
+          <div class="card-header">BREAKDOWN</div>
+          
+          <div class="card-content">
+            <div class="dimensions-list">
+              
+              <!-- Dimension 1: C vs E -->
+              <div class="dimension-item">
+                <div class="slider-label" id="label1">Low Canon Concentration</div>
+                <div class="slider-container">
+                  <div class="slider-marker" id="marker1" style="left: 30%;"></div>
+                </div>
+                <div class="dimension-labels">
+                  <span>Canonical</span>
+                  <span>Exploratory</span>
+                </div>
+              </div>
+
+              <!-- Dimension 2: B vs D -->
+              <div class="dimension-item">
+                <div class="slider-label" id="label2">Dominant Recognition</div>
+                <div class="slider-container">
+                  <div class="slider-marker" id="marker2" style="left: 65%;"></div>
+                </div>
+                <div class="dimension-labels">
+                  <span>Balanced</span>
+                  <span>Dominant</span>
+                </div>
+              </div>
+
+              <!-- Dimension 3: T vs H -->
+              <div class="dimension-item">
+                <div class="slider-label" id="label3">Technical Emphasis</div>
+                <div class="slider-container">
+                  <div class="slider-marker" id="marker3" style="left: 40%;"></div>
+                </div>
+                <div class="dimension-labels">
+                  <span>Technical</span>
+                  <span>Holistic</span>
+                </div>
+              </div>
+
+              <!-- Dimension 4: O vs S -->
+              <div class="dimension-item">
+                <div class="slider-label" id="label4">Stratified Genre Hierarchy</div>
+                <div class="slider-container">
+                  <div class="slider-marker" id="marker4" style="left: 55%;"></div>
+                </div>
+                <div class="dimension-labels">
+                  <span>Open</span>
+                  <span>Stratified</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type Card (Narrower) -->
+      <div class="result-card type-card">
+        <div class="card-inner">
+          <div class="card-header">YOUR VIEWING TYPE</div>
+          
+          <div class="card-content">
+            <h2 class="type-name" id="typeName">The<br>Concentrated<br>Viewer</h2>
+          </div>
+          
+          <div class="type-summary" id="typeSummary">
+            Your Viewing Shows Significant Concentration In Specific Films And Filmmakers.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Description -->
+    <p class="description-text" id="detailedDescription">
+      your viewing patterns show significant concentration in specific types of films and filmmakers. your film knowledge is heavily weighted toward male directors, male-protagonist stories, and a particular set of 'serious' genres. this isn't a personal failing—it reflects decades of industry practice that elevated certain voices while systematically limiting others' access and visibility. however, this concentration means you're missing substantial portions of cinema history and contemporary filmmaking.
+    </p>
+
+    <!-- Restart Button -->
+    <div class="button-container">
+      <a href="index.html" class="restart-button">
+        START OVER <span class="btn-arrow-box">→</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Results Script -->
+  <script src="calculate-results.js"></script>
+
+</body>
+</html>
